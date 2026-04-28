@@ -1,638 +1,1239 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Naman Pandey Portfolio</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Naman Pandey — Developer & Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #18181f;
+      --border: rgba(255,255,255,0.07);
+      --accent: #e8c84a;
+      --accent2: #5b7fff;
+      --text: #e8e8f0;
+      --muted: #7a7a8e;
+      --radius: 16px;
+    }
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <link rel="stylesheet" href="css/aos.css">
+    html { scroll-behavior: smooth; }
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
-    
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: none;
+    }
 
+    /* Custom cursor */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transition: transform 0.1s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(232,200,74,0.4);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transition: transform 0.18s ease, width 0.2s, height 0.2s;
+    }
+    .cursor-ring.hovering { width: 52px; height: 52px; border-color: var(--accent); }
 
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1; opacity: 0.4;
+    }
 
-<style>
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 5%;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.2rem;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1.5px; background: var(--accent);
+      transition: width 0.25s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--accent); color: #0a0a0f !important;
+      padding: 0.5rem 1.2rem; border-radius: 100px;
+      font-weight: 600 !important; color: #111 !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: #f5d95a; color: #000 !important; }
 
-/*======================================
-//--//-->   ABOUT
-======================================*/
+    /* HERO */
+    #home {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 5% 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(232,200,74,0.1);
+      border: 1px solid rgba(232,200,74,0.25);
+      color: var(--accent); font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .hero-title .name { color: var(--accent); display: block; }
+    .hero-subtitle {
+      font-size: 1.05rem; color: var(--muted);
+      line-height: 1.7; margin: 1.2rem 0 2rem;
+      max-width: 480px;
+    }
+    .typing-wrap { margin: 0.4rem 0 1.8rem; }
+    .typing-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--text);
+    }
+    .typing-cursor {
+      display: inline-block; width: 2px; height: 1.4em;
+      background: var(--accent); vertical-align: middle;
+      animation: blink 0.9s infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary-hero {
+      background: var(--accent); color: #0a0a0f;
+      padding: 0.8rem 2rem; border-radius: 100px;
+      font-weight: 700; font-size: 0.92rem;
+      text-decoration: none; border: none; cursor: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(232,200,74,0.25);
+    }
+    .btn-primary-hero:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(232,200,74,0.4); }
+    .btn-outline-hero {
+      background: transparent; color: var(--text);
+      padding: 0.8rem 2rem; border-radius: 100px;
+      font-weight: 500; font-size: 0.92rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline-hero:hover { border-color: var(--accent); color: var(--accent); }
 
-.about-mf .box-shadow-full {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
+    /* Hero visual side */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    .hero-card {
+      width: 320px; height: 380px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem; padding: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(232,200,74,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-avatar-ring {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      padding: 3px; margin-bottom: 0.5rem;
+    }
+    .hero-avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem; font-weight: 800; color: var(--accent);
+    }
+    .hero-card-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 1.15rem;
+      text-align: center;
+    }
+    .hero-card-role {
+      font-size: 0.82rem; color: var(--muted);
+      text-align: center; line-height: 1.5;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-top: 0.5rem; }
+    .hero-tag {
+      font-size: 0.72rem; padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .hero-tag.active { border-color: rgba(232,200,74,0.4); color: var(--accent); background: rgba(232,200,74,0.07); }
 
-.about-mf .about-img {
-  margin-bottom: 2rem;
-}
+    /* Floating stats */
+    .float-stat {
+      position: absolute;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    .float-stat:nth-child(1) { top: 5%; right: -30px; }
+    .float-stat:nth-child(2) { bottom: 15%; left: -40px; animation-delay: 1.5s; }
+    .float-stat strong { font-family: 'Syne', sans-serif; font-size: 1.1rem; color: var(--accent); display: block; }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
 
-.about-mf .about-img img {
-  margin-left: 10px;
-}
+    /* BG grid */
+    .bg-grid {
+      position: absolute; inset: 0; z-index: -1;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
 
+    /* SECTIONS COMMON */
+    section { padding: 6rem 5%; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent);
+      font-weight: 600; margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .section-desc { color: var(--muted); max-width: 540px; line-height: 1.75; font-size: 0.97rem; }
 
-.skill-mf .progress {
-  /* background-color: #cde1f8; */
-  margin: .5rem 0 1.2rem 0;
-  border-radius: 0;
-  height: .7rem;
-}
+    /* ABOUT */
+    #about { background: var(--surface); }
 
-.skill-mf .progress .progress-bar {
-  height: .7rem;
-  background-color: #ffbd39;
-}
+    .about-intro {
+      max-width: 820px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 1rem;
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .about-intro strong { color: var(--text); font-weight: 600; }
 
+    /* Category blocks */
+    .cat-block {
+      margin-bottom: 3rem;
+    }
+    .cat-header {
+      display: flex; align-items: center; gap: 1.2rem;
+      padding: 1.2rem 1.6rem;
+      border-radius: 14px 14px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      position: relative;
+    }
+    .cat-header-icon {
+      font-size: 1.6rem;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cat-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em;
+    }
+    .cat-subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+    .cat-badge {
+      margin-left: auto; font-size: 0.7rem; font-weight: 700;
+      padding: 0.3rem 0.9rem; border-radius: 100px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .sn-cat   { background: rgba(232,200,74,0.07);  border-color: rgba(232,200,74,0.25); }
+    .sn-cat  .cat-title  { color: var(--accent); }
+    .sn-badge { background: rgba(232,200,74,0.15);  color: var(--accent); border: 1px solid rgba(232,200,74,0.3); }
+    .da-cat   { background: rgba(255,167,38,0.07);  border-color: rgba(255,167,38,0.25); }
+    .da-cat  .cat-title  { color: #ffaa26; }
+    .da-badge { background: rgba(255,167,38,0.15);  color: #ffaa26; border: 1px solid rgba(255,167,38,0.3); }
+    .dev-cat  { background: rgba(100,200,255,0.07); border-color: rgba(100,200,255,0.25); }
+    .dev-cat .cat-title  { color: #64c8ff; }
+    .dev-badge{ background: rgba(100,200,255,0.15); color: #64c8ff; border: 1px solid rgba(100,200,255,0.3); }
 
-/* Animation styles */
-#typing-animation {
-  position: relative;
-  font-size: 30px;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typing 3s steps(20, end) infinite;
-}
+    .cat-block .expertise-grid {
+      border: 1px solid var(--border);
+      border-radius: 0 0 14px 14px;
+      padding: 1.2rem; background: var(--surface2); gap: 1rem;
+    }
+    .cat-block .expertise-card { background: var(--bg); }
+    .expertise-grid-2 { grid-template-columns: 1fr !important; }
+    .expertise-grid-2 .expertise-card { max-width: 640px; }
 
-#typing-animation:before {
-  content: "";
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background-color: #ccc;
-  animation: typing-cursor 0.5s ease-in-out infinite;
-}
+    /* Expertise cards */
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .expertise-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column; gap: 0.7rem;
+    }
+    .expertise-card:hover {
+      border-color: rgba(232,200,74,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+    }
+    .expertise-icon {
+      font-size: 1.8rem;
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.2rem;
+    }
+    .sn-color  { background: rgba(232,200,74,0.1); border: 1px solid rgba(232,200,74,0.2); }
+    .dev-color { background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.2); }
+    .itsm-color{ background: rgba(72,199,142,0.1); border: 1px solid rgba(72,199,142,0.2); }
+    .em-color  { background: rgba(255,100,100,0.1); border: 1px solid rgba(255,100,100,0.2); }
+    .da-color  { background: rgba(255,167,38,0.1); border: 1px solid rgba(255,167,38,0.2); }
+    .fs-color  { background: rgba(100,200,255,0.1); border: 1px solid rgba(100,200,255,0.2); }
+    .sql-color { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
+    .pbi-color { background: rgba(243,156,18,0.12); border: 1px solid rgba(243,156,18,0.25); }
+    .expertise-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.98rem; font-weight: 700; color: var(--text);
+    }
+    .expertise-desc {
+      font-size: 0.83rem; color: var(--muted); line-height: 1.7; flex: 1;
+    }
+    .expertise-tools {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem;
+    }
+    .expertise-tools span {
+      font-size: 0.68rem; padding: 0.2rem 0.6rem;
+      border-radius: 4px; background: var(--surface2);
+      color: var(--muted); font-weight: 500;
+      border: 1px solid var(--border);
+    }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
+    /* Tech stack */
+    .tech-stack-block {
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .tech-group {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+    }
+    .tech-group-label {
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); margin-bottom: 0.7rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .tgl-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .sn-dot  { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .da-dot  { background: #ffaa26;       box-shadow: 0 0 6px #ffaa26; }
+    .dev-dot { background: #64c8ff;       box-shadow: 0 0 6px #64c8ff; }
 
-@keyframes typing-cursor {
-  from {
-    width: 5px;
-  }
-  to {
-    width: 0;
-  }
-}
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 
+    .tpill {
+      font-size: 0.72rem; font-weight: 600;
+      padding: 0.28rem 0.75rem; border-radius: 6px;
+      cursor: default; letter-spacing: 0.02em;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .tpill:hover { transform: translateY(-2px); }
 
-/* project image zoom effect */
+    /* Expert — solid gold */
+    .tpill.expert {
+      background: rgba(232,200,74,0.15);
+      border: 1px solid rgba(232,200,74,0.45);
+      color: var(--accent);
+    }
+    .tpill.expert:hover { box-shadow: 0 4px 14px rgba(232,200,74,0.25); }
 
-.zoom-effect {
-  overflow: hidden;
-  transition: transform 0.3s ease-out;
-}
+    /* Advanced — blue */
+    .tpill.advanced {
+      background: rgba(91,127,255,0.12);
+      border: 1px solid rgba(91,127,255,0.35);
+      color: #8ba3ff;
+    }
+    .tpill.advanced:hover { box-shadow: 0 4px 14px rgba(91,127,255,0.2); }
 
-.zoom-effect:hover {
-  transform: scale(1.1);
-}
+    /* Intermediate — muted */
+    .tpill.intermediate {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+    }
+    .tpill.intermediate:hover { box-shadow: 0 4px 14px rgba(255,255,255,0.06); }
 
+    .tech-legend {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      margin-top: 1rem; padding: 0.8rem 1rem;
+      background: var(--surface2); border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .tl-item {
+      font-size: 0.72rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
 
-</style>
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 5rem; align-items: start; margin-top: 3rem;
+    }
+    .about-skills { margin-top: 2rem; }
+    .skill-item { margin-bottom: 1.2rem; }
+    .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.85rem; }
+    .skill-name { font-weight: 500; }
+    .skill-pct { color: var(--accent); font-weight: 600; }
+    .skill-bar { height: 4px; background: var(--surface2); border-radius: 100px; overflow: hidden; }
+    .skill-fill {
+      height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 100px; width: 0;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .about-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 2rem 0; }
+    .about-info-item { background: var(--surface2); border-radius: 12px; padding: 1rem 1.2rem; border: 1px solid var(--border); }
+    .about-info-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.3rem; }
+    .about-info-value { font-size: 0.92rem; font-weight: 500; }
+    .cert-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .cert-badge {
+      font-size: 0.72rem; padding: 0.3rem 0.8rem; border-radius: 6px;
+      background: rgba(91,127,255,0.12); border: 1px solid rgba(91,127,255,0.25);
+      color: #8ba3ff; font-weight: 500;
+    }
+    .cert-link {
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .cert-link:hover {
+      background: rgba(91,127,255,0.22);
+      border-color: rgba(91,127,255,0.55);
+      color: #b0c4ff;
+      transform: translateY(-2px);
+    }
 
+    /* EXPERIENCE */
+    #experience {}
+    .exp-grid { display: grid; gap: 1.5rem; margin-top: 3rem; }
+    .exp-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 1.5rem; align-items: start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .exp-card:hover { border-color: rgba(232,200,74,0.3); transform: translateX(4px); }
+    .exp-dot-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; padding-top: 4px; }
+    .exp-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+      flex-shrink: 0;
+    }
+    .exp-dot.current { animation: pulse-dot 1.8s infinite; }
+    @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 2px var(--accent);} 50%{box-shadow:0 0 0 6px rgba(232,200,74,0.2);} }
+    .exp-dot-line { width: 1px; flex: 1; min-height: 40px; background: var(--border); }
+    .exp-date { font-size: 0.78rem; color: var(--muted); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    .exp-role { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; }
+    .exp-company { color: var(--accent); font-size: 0.88rem; font-weight: 500; margin: 0.2rem 0 0.8rem; }
+    .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .exp-points li { font-size: 0.88rem; color: var(--muted); line-height: 1.6; padding-left: 1rem; position: relative; }
+    .exp-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+    .exp-current-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: rgba(232,200,74,0.1); border: 1px solid rgba(232,200,74,0.25);
+      color: var(--accent); font-size: 0.7rem; font-weight: 600;
+      padding: 0.2rem 0.6rem; border-radius: 100px; margin-left: 0.6rem;
+    }
+    .exp-current-badge::before { content:''; width:5px;height:5px;background:var(--accent);border-radius:50%;animation:pulse 1.5s infinite; }
 
-  </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-	  
-	  
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Naman Pandey</a>
-	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
+    /* PROJECTS */
+    #projects { background: var(--surface); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .proj-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column;
+    }
+    .proj-card:hover { transform: translateY(-6px); border-color: rgba(232,200,74,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .proj-img {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .proj-img-1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+    .proj-img-2 { background: linear-gradient(135deg, #0f3460, #533483); }
+    .proj-img-3 { background: linear-gradient(135deg, #1b2838, #2a475e); }
+    .proj-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%);
+    }
+    .proj-body { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem; }
+    .proj-tag {
+      font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 4px;
+      background: var(--surface2); color: var(--muted);
+      font-weight: 500; letter-spacing: 0.03em;
+    }
+    .proj-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .proj-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.65; flex: 1; }
+    .proj-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .proj-link { font-size: 0.78rem; color: var(--accent); font-weight: 600; text-decoration: none; letter-spacing: 0.04em; }
+    .proj-icon { font-size: 1.5rem; }
 
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav nav ml-auto">
-	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
-	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-	          <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
-	          <li class="nav-item"><a href="#project-section" class="nav-link"><span>Projects</span></a></li>
-	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
-	  <section id="home-section" class="hero">
-		  <div class="home-slider  owl-carousel">
-	       <div class="slider-item ">
-	      	<div class="overlay"></div>
-	         <div class="container">
-	          <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
-	          	<div class="one-third js-fullheight order-md-last img" >
-					<!-- put background images style="background-image:url(image path);" -->
-	          	 <div class="overlay"></div>
-	          	</div>
-		          <div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-		          	<div class="text">
-		          		<span class="subheading">Hello!</span>
-			            <h1 class="mb-4 mt-3">I'm <span>Naman Pandey</span></h1>
+    /* STATS */
+    #stats {
+      background: var(--bg);
+      padding: 4rem 5%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 1200px; margin: 0 auto; }
+    .stat-card {
+      text-align: center; padding: 2rem 1rem;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem; font-weight: 800; color: var(--accent);
+      display: block; line-height: 1;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; }
 
-						<!-- Element to contain animated typing -->
-						<span id="typing-animation"></span>
+    /* EDUCATION */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+    .edu-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.8rem;
+    }
+    .edu-year { font-size: 0.78rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .edu-degree { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .edu-school { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .edu-grade {
+      font-size: 0.78rem; display: inline-flex; align-items: center; gap: 0.3rem;
+      background: rgba(232,200,74,0.1); color: var(--accent);
+      border: 1px solid rgba(232,200,74,0.2); padding: 0.2rem 0.7rem; border-radius: 100px;
+    }
 
-						<script>
+    /* CONTACT */
+    #contact { background: var(--surface); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+    .contact-cards { display: grid; gap: 1rem; }
+    .contact-card {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.2rem 1.4rem;
+      text-decoration: none; color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-card:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--surface2); display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .contact-card-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .contact-card-value { font-size: 0.92rem; font-weight: 500; margin-top: 0.1rem; }
+    .contact-cta { margin-top: 2rem; }
+    .contact-cta p { color: var(--muted); line-height: 1.7; font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .socials { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .social-btn {
+      width: 42px; height: 42px; border-radius: 10px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); text-decoration: none; font-size: 1rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-						// Initialize the typing animation
-						const typingAnimationElement = document.getElementById('typing-animation');
+    /* FOOTER */
+    footer {
+      padding: 2rem 5%; text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.82rem;
+    }
 
-						// Create an array of typing text
-						const typingTexts = [
-						'Engineer  ',
-						'Analyst  ',
-						'Sports Enthusiast   ',
-						'Travel Lover  '
-						];
+    /* ANIMATIONS */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-						// Create a function to display the typing animation for a given text
-						function playTypingAnimation(text) {
-						// Loop through each character and add it to the element
-						for (let i = 0; i < text.length; i++) {
-							setTimeout(() => {
-							typingAnimationElement.textContent += text[i];
-							}, i * 200); // Increase the delay to slow down the typing animation
-						}
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-grid, .about-grid, .contact-grid, .edu-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .expertise-grid { grid-template-columns: 1fr 1fr; }
+      .hero-visual { display: none; }
+      nav { padding: 1rem 5%; }
+      .nav-links { gap: 1.4rem; }
+    }
+    @media (max-width: 600px) {
+      .projects-grid, .stats-grid, .about-info-grid, .expertise-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
 
-						// Once the animation is complete, reset the text and start over
-						setTimeout(() => {
-							typingAnimationElement.textContent = '';
-							playTypingAnimation(typingTexts[(typingTexts.indexOf(text) + 1) % typingTexts.length]);
-						}, text.length * 200);
-						}
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
-						// Start the typing animation loop
-						playTypingAnimation(typingTexts[0]);
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">Naman<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
 
-						</script>
+  <!-- HERO -->
+  <section id="home">
+    <div class="bg-grid"></div>
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge"><span></span> Available for opportunities</div>
+        <h1 class="hero-title">
+          Hi, I'm
+          <span class="name">Naman Pandey</span>
+        </h1>
+        <div class="typing-wrap">
+          <span class="typing-role" id="typingEl"></span><span class="typing-cursor"></span>
+        </div>
+        <p class="hero-subtitle">ServiceNow Developer & Full Stack Engineer with 2+ years of experience building enterprise solutions, automating workflows, and crafting data-driven insights.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-primary-hero">View My Work</a>
+          <a href="https://docs.google.com/document/d/1hdJme07UoaD42ynuAuIT2SnF2-xNgVK0/edit?usp=sharing&ouid=111886769269373525714&rtpof=true&sd=true" class="btn-outline-hero" target="_blank">Download CV</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-avatar-ring">
+            <div class="hero-avatar-inner">NP</div>
+          </div>
+          <div class="hero-card-name">Naman Pandey</div>
+          <div class="hero-card-role">ServiceNow Developer<br>Full Stack · Data Analytics</div>
+          <div class="hero-tags">
+            <span class="hero-tag active">ServiceNow</span>
+            <span class="hero-tag">MERN Stack</span>
+            <span class="hero-tag active">Python</span>
+            <span class="hero-tag">Power BI</span>
+          </div>
+        </div>
+        <div class="float-stat">
+          <strong>2+</strong>
+          Years Experience
+        </div>
+        <div class="float-stat">
+          <strong>10+</strong>
+          Projects Done
+        </div>
+      </div>
+    </div>
+  </section>
 
-						<br>
-						<br>
-			            <h2>ServiceNow Developer | Full Stack Developer (MERN) | Data Analytics</h2>
-						<!-- <h2 class="d-flex" style="margin-bottom: 0">With over 5 years of experience</h2> -->
-						<!-- <br> -->
-			            <p>
-							<a href="https://github.com/naman252001?tab=repositories" class="btn btn-primary btn-outline-white py-3 px-4">My works</a></p>
-		            </div>
-		          </div>
-	        	</div>
-	        </div>
-	      </div>
-		</div>
-    </section>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="section-label">Who I Am</div>
+      <h2 class="section-title">About Me</h2>
 
+      <!-- Intro paragraph -->
+      <div class="about-intro reveal">
+        <p>I'm <strong>Naman Pandey</strong>, a technology professional with <strong>2+ years of hands-on experience</strong> building enterprise-grade solutions on the ServiceNow platform, crafting modern full-stack web applications, and turning raw data into actionable business insights. I hold <strong>four ServiceNow certifications</strong> — CSA, CAD, CIS-ITSM, and CIS-Event Management — and I genuinely enjoy the challenge of solving complex, real-world problems with clean, efficient code.</p>
+        <p style="margin-top:1rem;">My journey started with a deep curiosity for how technology can simplify the way organisations work. Over the years, that curiosity has grown into a well-rounded skill set that spans enterprise platform development, web engineering, and data analytics. I believe the best solutions aren't just technically sound — they're intuitive, maintainable, and built with the end user in mind.</p>
+        <p style="margin-top:1rem;">Outside of work, I'm an avid volleyball player and a passionate traveller. Competing on the court keeps me sharp, disciplined, and comfortable under pressure — qualities I bring to every project I take on. Travelling keeps me curious, open-minded, and always looking for a fresh perspective.</p>
+      </div>
 
+      <!-- Expertise domain cards — CATEGORISED -->
+      <div style="margin-top: 3.5rem;">
+        <div class="section-label" style="margin-bottom: 2rem;">What I Do</div>
 
-    <section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
-    	<div class="container">
-			<div class="row">
-				<div class="row d-flex align-items-stretch">
-				<!-- <div class="row d-flex"> -->
-					<div class="col-md-6 col-lg-5 d-flex">
-						<div class="img-about img d-flex align-items-stretch">
-							<div class="overlay">
-								<div class="row">
-									<div class="col-sm-6 col-md-5">
-									  <div class="about-img">
-										<img src="images/about-me.jpg" class="img-fluid rounded b-shadow-a" alt="">
-									  </div>
-									</div>
-									<!-- Details next to profile image -->
-									<div class="col-sm-6 col-md-7">
-									  <div class="about-info">
-										<p><span class="title-s">Name: </span> <span>Naman Pandey</span></p>
-										<p><span class="title-s">Job Role: </span> <span>Full Stack Developer</span></p>
-										<p><span class="title-s">Experience: </span> <span>2 years</span></p>
-										<p><span class="title-s">Address: </span> <span>Bhilai, Chhattisgarh, India</span></p>
-									  </div>
-									</div>
-								  </div>
-
-								<div class="skill-mf">
-									<p class="title-s">Skills</p>
-									<span>SQL</span> <span class="pull-right">95%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="95" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>PYTHON</span> <span class="pull-right">85%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>Data Visualization</span> <span class="pull-right">90%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>Statistical Analysis</span> <span class="pull-right">85%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>powerBI</span> <span class="pull-right">90%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
-						<div class="row justify-content-start pb-3">
-							<div class="col-md-12 heading-section ftco-animate">
-								
-								<h1 class="big">About</h1>
-								<h2 class="mb-4">About Me</h2>
-								
-								<p>I am a technology professional with strong experience in the ServiceNow ecosystem and a background in full-stack development and data analysis. I hold multiple ServiceNow certifications including Certified System Administrator (CSA), Certified Application Developer (CAD), CIS-ITSM, and CIS-Event Management.
-
-									My expertise includes ServiceNow administration, application development, ITSM processes, and Event Management, along with hands-on experience in modern web technologies such as the MERN stack and Django. I also have knowledge of data analysis and enjoy solving complex problems using data-driven approaches.
-
-									I am passionate about building efficient solutions, automating processes, and continuously learning new technologies. Beyond technology, I enjoy sports and travelling, which help me stay active, curious, and balanced.
-
-									I am always open to opportunities where I can contribute my technical skills, grow professionally, and create impactful solutions.
-</p>
-								<ul class="about-info mt-4 px-md-0 px-2">
-									<li class="d-flex"><span>Profile:</span> <span>Full Stack &amp; Analytics</span></li>
-									<li class="d-flex"><span>Education:</span> <span>Bachelor of Engineering</span></li>
-									<li class="d-flex"><span>Language:</span> <span>English, Hindi</span></li>
-									<li class="d-flex"><span>BI Tools:</span> <span>Microsoft Power BI, Looker &amp; Excel</span></li>
-									<li class="d-flex"><span>Other Skills:</span> <span>ServiceNow, PySpark, Excel, Git, Google Analytics</span></li>
-									<li class="d-flex"><span>Interest:</span> <span>Traveling, Volleyball</span></li>
-									
-								</ul>
-							</div>
-						</div>
-
-
-						<div class="counter-wrap ftco-animate d-flex mt-md-3">
-							<div class="text">
-								<p class="mb-4">
-									<span class="number" data-number="10">0</span> <span>+</span>
-									 <span>&nbsp; Projects completed</span>
-								</p>
-								<p><a href="https://www.linkedin.com/in/naman-pandey-b3ab2b249/" class="btn btn-primary py-3 px-3">LinkedIn</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </section>
-
-
-
-	
-    <section class="ftco-section ftco-no-pb" id="resume-section">
-    	<div class="container">
-    		<div class="row justify-content-center pb-5">
-          <div class="col-md-10 heading-section text-center ftco-animate">
-          	<h1 class="big big-2">Resume</h1>
-            <h2 class="mb-4">Resume</h2>
-            <!-- <p>Seasoned Senior Data Analyst with 5+ years of experience driving business strategies through data-driven insights. Proven expertise in data science, statistical analysis, machine learning algorithms and project management.</p> -->
+        <!-- CATEGORY 1: ServiceNow -->
+        <div class="cat-block reveal">
+          <div class="cat-header sn-cat">
+            <div class="cat-header-icon">⚡</div>
+            <div>
+              <div class="cat-title">ServiceNow</div>
+              <div class="cat-subtitle">Enterprise Platform · 4 Certifications · CSA · CAD · CIS-ITSM · CIS-EM</div>
+            </div>
+            <div class="cat-badge sn-badge">4 Certs</div>
+          </div>
+          <div class="expertise-grid">
+            <div class="expertise-card">
+              <div class="expertise-icon sn-color">⚙️</div>
+              <h3 class="expertise-title">ServiceNow Administration</h3>
+              <p class="expertise-desc">A ServiceNow Administrator is the backbone of any organisation's ServiceNow instance. I manage users, roles, groups, and access controls to keep the platform secure and efficient. I configure system properties, UI policies, business rules, and notifications to tailor the platform to business needs — ensuring smooth day-to-day operations without disrupting live services.</p>
+              <div class="expertise-tools">
+                <span>User Management</span><span>Business Rules</span><span>UI Policies</span><span>ACLs</span><span>Flow Designer</span>
+              </div>
+            </div>
+            <div class="expertise-card">
+              <div class="expertise-icon dev-color">🛠️</div>
+              <h3 class="expertise-title">ServiceNow Development</h3>
+              <p class="expertise-desc">As a certified ServiceNow Application Developer, I build custom applications and automations that extend the platform far beyond its out-of-the-box capabilities. Using App Engine Studio, I design scoped applications, custom tables, client scripts, and REST integrations. I write clean JavaScript-based server and client-side scripts to create workflows that are fast, scalable, and aligned with business goals.</p>
+              <div class="expertise-tools">
+                <span>App Engine Studio</span><span>Scripted REST APIs</span><span>Client Scripts</span><span>Scoped Apps</span><span>IntegrationHub</span>
+              </div>
+            </div>
+            <div class="expertise-card">
+              <div class="expertise-icon itsm-color">🎫</div>
+              <h3 class="expertise-title">ITSM — IT Service Management</h3>
+              <p class="expertise-desc">ITSM is about delivering IT as a service — reliably, consistently, and with clear accountability. I implement and manage the core ITSM processes: Incident Management (restoring service quickly), Problem Management (finding root causes), Change Management (controlling risk in releases), and Request Management (handling user needs efficiently). My CIS-ITSM certification validates my ability to configure and optimise these processes on the ServiceNow platform.</p>
+              <div class="expertise-tools">
+                <span>Incident Management</span><span>Problem Management</span><span>Change Management</span><span>Service Catalog</span><span>SLA Management</span>
+              </div>
+            </div>
+            <div class="expertise-card">
+              <div class="expertise-icon em-color">📡</div>
+              <h3 class="expertise-title">Event Management</h3>
+              <p class="expertise-desc">ServiceNow Event Management connects monitoring tools to the ServiceNow platform, giving IT teams a single, unified view of infrastructure health. I configure event rules, alert thresholds, and CI (Configuration Item) correlations so that when something goes wrong in production — a server spike, a network failure — the right team is notified instantly and an incident is created automatically. This dramatically reduces MTTR (Mean Time To Resolve) and prevents small issues from becoming big outages.</p>
+              <div class="expertise-tools">
+                <span>Event Rules</span><span>Alert Management</span><span>CI Correlation</span><span>CMDB</span><span>Operator Workspace</span>
+              </div>
+            </div>
           </div>
         </div>
 
-		<div class="row">
-			<h1 class="big-4">Experience</h1>
-			<div class="underline"></div>
-		</div>
-		<br>
-		
-		<div class="row">
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">Feb 2024 - Apr 2025</span>
-						<h2>IT Intern</h2>
-						<span class="position">I-Connect Resources International Private Limited</span>
-						<p class="mt-4">Gained comprehensive experience in full-stack development and ServiceNow administration through structured training programs.
-							<ul>
-								<li><strong>Full Stack Development (Feb 2024 - Aug 2024):</strong> Developed proficiency in modern web technologies including React, Node.js, and database management systems. Built responsive web applications with clean, maintainable code.</li>
-								<li><strong>ServiceNow Administration & Development (Sep 2024 - Dec 2024):</strong> Mastered ServiceNow platform administration, workflow automation, and custom application development. Gained hands-on experience with ServiceNow's ITSM modules and best practices.</li>
-								<li>Collaborated with cross-functional teams to deliver scalable solutions and improve system efficiency.</li>
-								<li>Participated in code reviews and followed agile development methodologies.</li>
-							</ul>
-						</p>
-					</div>
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">Apr 2025 - Present</span>
-						<h2>Junior Developer</h2>
-						<span class="position">I-Connect Resources International Private Limited</span>
-						<p class="mt-4">Continuing professional growth in software development with focus on enterprise solutions and ServiceNow platform.
-							<ul>
-								<li>Develop and maintain custom applications on the ServiceNow platform to meet business requirements.</li>
-								<li>Implement automated workflows and business process improvements using ServiceNow's development tools.</li>
-								<li>Collaborate with senior developers and architects on complex system integrations.</li>
-								<li>Contribute to the enhancement of existing applications and development of new features.</li>
-								<li>Maintain code quality through testing, documentation, and adherence to coding standards.</li>
-							</ul>
-						</p>
-					</div>
-				</div>
-			</div>
-
-		<br>
-		<br>
-
-		<div class="row">
-			<h1 class="big-4">Education</h1>
-			<div class="underline"></div>
-		</div>
-		<br>
-		
-			<div class="row">
-    			<div class="col-md-6">
-    				<div class="resume-wrap ftco-animate">
-    					<span class="date">2018-2022</span>
-    					<h2>Bachelor of Engineering</h2>
-    					<span class="position">Christian college of engineering and technology</span>
-    					<p class="mt-4">Grade: First class distinction.</p>
-    				</div>
-    			</div>
-
-    			<div class="col-md-6">
-    				<div class="resume-wrap ftco-animate">
-    					<span class="date">2017-2018</span>
-    					<h2>Higher Secondary School</h2>
-    					<span class="position">Bhilai Nair Samajam School</span>
-    					<p class="mt-4">Grade: First class distinction.</p>
-    				</div>
-				</div>
-    		</div>
-
-    		<!-- <div class="row justify-content-center mt-5">
-    			<div class="col-md-6 text-center ftco-animate">
-    				<p><a href="#" class="btn btn-primary py-4 px-5">Download CV</a></p>
-    			</div>
-    		</div>
-    	</div> -->
-    </section>
-
-   
-
-    <section class="ftco-section" id="project-section">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-5">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <h1 class="big big-2">Projects</h1>
-            <h2 class="mb-4">Projects</h2>
-            <p>Below are the sample projects showcasing my expertise in ServiceNow, MERN stack, and Machine Learning.</p>
+        <!-- CATEGORY 2: Data Analytics -->
+        <div class="cat-block reveal">
+          <div class="cat-header da-cat">
+            <div class="cat-header-icon">📊</div>
+            <div>
+              <div class="cat-title">Data Analytics</div>
+              <div class="cat-subtitle">Python · SQL · Power BI · Statistical Analysis · Machine Learning</div>
+            </div>
+            <div class="cat-badge da-badge">Analytics</div>
           </div>
-        </div>
-
-        <div class="row d-flex">
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="#" class="block-20 zoom-effect" style="background-image: url('images/proj_1.jpg');">
-              </a>
-              <div class="text mt-3 float-right d-block">
-                <h3 class="heading"><a href="#">Corporate LMS</a></h3>
-                <p>ServiceNow application built with App Engine Studio enabling corporate employees to learn new skills aligned with company needs. Managers can track employee progress and skill development through comprehensive dashboards and reporting tools.</p>
+          <div class="expertise-grid">
+            <div class="expertise-card">
+              <div class="expertise-icon da-color">📊</div>
+              <h3 class="expertise-title">Data Analytics</h3>
+              <p class="expertise-desc">Data without context is just noise. I work with data end-to-end — cleaning and transforming raw datasets with Python (pandas, numpy), performing statistical analysis to find patterns, and building interactive dashboards in Power BI and Looker that help decision-makers act fast. From building machine learning models for prediction to crafting executive-level reports, I turn complex data into stories that non-technical stakeholders can understand and act on.</p>
+              <div class="expertise-tools">
+                <span>Python</span><span>Pandas</span><span>NumPy</span><span>Statistical Analysis</span><span>PySpark</span><span>Looker</span>
               </div>
             </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="#" class="block-20 zoom-effect" style="background-image: url('images/proj_5.jpg');">
-              </a>
-              <div class="text mt-3 float-right d-block">
-                <h3 class="heading"><a href="#">Corporate Workhub</a></h3>
-                <p>MERN stack application where employees can display daily tasks and view their last 3 months of work. Managers have access to individual employee reports and comprehensive work history for performance tracking and team management.</p>
+            <div class="expertise-card">
+              <div class="expertise-icon sql-color">🗄️</div>
+              <h3 class="expertise-title">SQL & Database Management</h3>
+              <p class="expertise-desc">SQL is the language of data — and I'm fluent in it. I write complex queries involving multi-table JOINs, subqueries, CTEs (Common Table Expressions), and window functions to extract precise insights from large datasets. I design normalised database schemas, optimise slow queries with indexing strategies, and manage stored procedures and triggers. Whether it's pulling a quick report or engineering a full ETL pipeline, SQL is my go-to tool for getting reliable answers from data fast.</p>
+              <div class="expertise-tools">
+                <span>MySQL</span><span>PostgreSQL</span><span>SQL Server</span><span>CTEs</span><span>Window Functions</span><span>Query Optimisation</span><span>Stored Procedures</span>
               </div>
             </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="#" class="block-20 zoom-effect" style="background-image: url('images/proj_3.jpg');">
-              </a>
-              <div class="text mt-3 float-right d-block">
-                <h3 class="heading"><a href="#">CAR Price Prediction</a></h3>
-                <p>Machine learning project for Chinese automobile company Geely Auto entering US market. Used Python libraries (numpy, pandas, matplotlib, seaborn) and ML algorithms to predict car prices, with Power BI dashboard for management insights on price variations with independent variables.</p>
+            <div class="expertise-card">
+              <div class="expertise-icon pbi-color">📈</div>
+              <h3 class="expertise-title">Power BI</h3>
+              <p class="expertise-desc">Power BI is where raw data becomes a story. I design end-to-end BI solutions — connecting to data sources (SQL databases, Excel, APIs), transforming and shaping data using Power Query (M language), and building rich semantic models with DAX (Data Analysis Expressions) for calculated measures and KPIs. My dashboards are built for performance and usability, with drill-throughs, slicers, and row-level security so the right people see the right data.</p>
+              <div class="expertise-tools">
+                <span>DAX</span><span>Power Query</span><span>Data Modelling</span><span>KPI Dashboards</span><span>Row-Level Security</span><span>Drill-Through</span>
               </div>
             </div>
           </div>
         </div>
-          </div>
-        </div> -->
-	<br>
-		<!-- added justify-content-center to center align the last two projects -->
-		<!-- <div class="row d-flex justify-content-center">  
-			<div class="col-md-4 d-flex ftco-animate">
-				<div class="blog-entry justify-content-end">
-				<a href="https://github.com/rishabhnmishra/sales_forecasting/tree/main" class="block-20 zoom-effect" style="background-image: url('images/proj_4.jpg');">
-				</a>
-				<div class="text mt-3 float-right d-block">
-  
-				  <h3 class="heading"><a href="https://github.com/rishabhnmishra/sales_forecasting/tree/main">Sales Forecast- Time Series Forecasting</a></h3>
-				  <p>Used multiple machine learning models to forecast sales (retail store) and performed time series analysis.</p>
-				</div>
-			  </div>
-			</div>
-			<div class="col-md-4 d-flex ftco-animate">
-				<div class="blog-entry justify-content-end">
-				<a href="https://github.com/rishabhnmishra/customer_segmentation/blob/main/Customer_Segmentation-final.ipynb" class="block-20 zoom-effect" style="background-image: url('images/proj_5.jpg');">
-				</a>
-				<div class="text mt-3 float-right d-block">
-  
-				  <h3 class="heading"><a href="https://github.com/rishabhnmishra/customer_segmentation/blob/main/Customer_Segmentation-final.ipynb">Customer Segmentation using clustering model</a></h3>
-				  <p>Developed a ML model to give various recommendations of financial products &amp; services on target customer groups.</p>
-				</div>
-			  </div>
-			</div>
-		 </div> -->
-	  </div>
-    </section>
 
-	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
-      <div class="container">
-		<div class="row d-md-flex align-items-center">
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="5">0</strong>
-                <span>Achievements</span>
+        <!-- CATEGORY 3: Development -->
+        <div class="cat-block reveal">
+          <div class="cat-header dev-cat">
+            <div class="cat-header-icon">💻</div>
+            <div>
+              <div class="cat-title">Development</div>
+              <div class="cat-subtitle">MERN Stack · React · Node.js · Django · REST APIs · MongoDB</div>
+            </div>
+            <div class="cat-badge dev-badge">Full Stack</div>
+          </div>
+          <div class="expertise-grid expertise-grid-2">
+            <div class="expertise-card">
+              <div class="expertise-icon fs-color">🌐</div>
+              <h3 class="expertise-title">Full Stack Development</h3>
+              <p class="expertise-desc">I build complete web applications from database to user interface. On the front end, I use React.js to craft responsive, accessible UIs with smooth user experiences. On the back end, I design RESTful APIs with Node.js and Express, and manage data with MongoDB and SQL databases. I follow component-based architecture, write maintainable code, and use Git for version control — delivering production-ready applications that are fast, scalable, and clean.</p>
+              <div class="expertise-tools">
+                <span>React.js</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST APIs</span><span>Django</span><span>Git</span>
               </div>
             </div>
           </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="10">0</strong>
-                <span>Projects</span>
+        </div>
+
+      </div>
+
+      <!-- Skills + Info -->
+      <div class="about-grid" style="margin-top: 4rem;">
+        <div>
+          <!-- Technical Stack -->
+          <div class="section-label" style="margin-bottom:1.4rem;">Technical Stack</div>
+
+          <div class="tech-stack-block">
+
+            <div class="tech-group">
+              <div class="tech-group-label">
+                <span class="tgl-dot sn-dot"></span> ServiceNow Platform
               </div>
+              <div class="tech-pills">
+                <span class="tpill expert">App Engine Studio</span>
+                <span class="tpill expert">Flow Designer</span>
+                <span class="tpill expert">Business Rules</span>
+                <span class="tpill expert">ITSM</span>
+                <span class="tpill advanced">IntegrationHub</span>
+                <span class="tpill advanced">Scripted REST APIs</span>
+                <span class="tpill advanced">Client Scripts</span>
+                <span class="tpill advanced">CMDB</span>
+                <span class="tpill advanced">Event Management</span>
+              </div>
+            </div>
+
+            <div class="tech-group">
+              <div class="tech-group-label">
+                <span class="tgl-dot da-dot"></span> Data & Analytics
+              </div>
+              <div class="tech-pills">
+                <span class="tpill expert">SQL</span>
+                <span class="tpill expert">Python</span>
+                <span class="tpill expert">Power BI</span>
+                <span class="tpill advanced">Pandas</span>
+                <span class="tpill advanced">NumPy</span>
+                <span class="tpill advanced">DAX</span>
+                <span class="tpill advanced">Power Query</span>
+                <span class="tpill intermediate">PySpark</span>
+                <span class="tpill intermediate">Looker</span>
+                <span class="tpill intermediate">Machine Learning</span>
+              </div>
+            </div>
+
+            <div class="tech-group">
+              <div class="tech-group-label">
+                <span class="tgl-dot dev-dot"></span> Development
+              </div>
+              <div class="tech-pills">
+                <span class="tpill advanced">React.js</span>
+                <span class="tpill advanced">Node.js</span>
+                <span class="tpill advanced">Express.js</span>
+                <span class="tpill advanced">MongoDB</span>
+                <span class="tpill advanced">REST APIs</span>
+                <span class="tpill intermediate">Django</span>
+                <span class="tpill intermediate">Git</span>
+                <span class="tpill intermediate">MySQL</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Legend -->
+          <div class="tech-legend">
+            <span class="tl-item"><span class="tpill expert" style="pointer-events:none;">Expert</span> Daily use, production level</span>
+            <span class="tl-item"><span class="tpill advanced" style="pointer-events:none;">Advanced</span> Strong hands-on experience</span>
+            <span class="tl-item"><span class="tpill intermediate" style="pointer-events:none;">Intermediate</span> Working knowledge</span>
+          </div>
+
+          <!-- Certs -->
+          <div style="margin-top: 2rem;">
+            <div class="section-label" style="margin-bottom:0.8rem;">ServiceNow Certifications</div>
+            <div class="cert-list">
+              <a href="https://drive.google.com/file/d/1x5ZDN2eVJp6rd2PN7oJ-417cnBybKflB/view?usp=sharing" target="_blank" class="cert-badge cert-link">✓ CSA — Certified System Admin ↗</a>
+              <a href="https://drive.google.com/file/d/1lKy47WH0Z1BdJ7MJEz_tXYBPxCinKS19/view?usp=sharing" target="_blank" class="cert-badge cert-link">✓ CAD — Certified App Dev ↗</a>
+              <a href="https://drive.google.com/file/d/11spQIpRkqiwZ0ERJD-5R6xrIiSoPNTBR/view?usp=sharing" target="_blank" class="cert-badge cert-link">✓ CIS-ITSM ↗</a>
+              <a href="https://drive.google.com/file/d/1X7DrYqlu4XyytDF8ABWJhQEZ-twqYZzP/view?usp=sharing" target="_blank" class="cert-badge cert-link">✓ CIS-Event Management ↗</a>
             </div>
           </div>
-          <!-- <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="1000">0</strong>
-                <span>Mentored Students</span>
-              </div>
+        </div>
+
+        <div>
+          <div class="about-info-grid">
+            <div class="about-info-item">
+              <div class="about-info-label">Location</div>
+              <div class="about-info-value">Bhilai, Chhattisgarh, India</div>
             </div>
-          </div> -->
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="500">0</strong>
-                <span>Cups of coffee</span>
-              </div>
+            <div class="about-info-item">
+              <div class="about-info-label">Experience</div>
+              <div class="about-info-value">2+ Years</div>
+            </div>
+            <div class="about-info-item">
+              <div class="about-info-label">Education</div>
+              <div class="about-info-value">B.E. (First Class Distinction)</div>
+            </div>
+            <div class="about-info-item">
+              <div class="about-info-label">Languages</div>
+              <div class="about-info-value">English, Hindi</div>
+            </div>
+            <div class="about-info-item">
+              <div class="about-info-label">BI Tools</div>
+              <div class="about-info-value">Power BI, Looker, Excel</div>
+            </div>
+            <div class="about-info-item">
+              <div class="about-info-label">Interests</div>
+              <div class="about-info-value">🏐 Volleyball, ✈️ Travelling</div>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem; padding: 1.5rem; background: var(--surface2); border-radius: var(--radius); border: 1px solid var(--border);">
+            <div class="section-label" style="margin-bottom:0.6rem;">My Philosophy</div>
+            <p style="color:var(--muted); font-size:0.92rem; line-height:1.8; font-style:italic;">"The best technology is invisible — it just works, quietly making someone's day easier. That's what I aim to build: solutions that are powerful under the hood but effortless to use."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div id="stats">
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="2">0</span>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="10">0</span>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="4">0</span>
+        <div class="stat-label">ServiceNow Certifications</div>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-num" data-target="500">0</span>
+        <div class="stat-label">Cups of Coffee ☕</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-inner">
+      <div class="section-label">Career Path</div>
+      <h2 class="section-title">Experience</h2>
+      <div class="exp-grid">
+        <div class="exp-card reveal">
+          <div class="exp-dot-wrap">
+            <div class="exp-dot current"></div>
+            <div class="exp-dot-line"></div>
+          </div>
+          <div>
+            <div class="exp-date">Apr 2025 — Present</div>
+            <div class="exp-role">Junior Developer <span class="exp-current-badge">Current</span></div>
+            <div class="exp-company">I-Connect Resources International Pvt. Ltd.</div>
+            <ul class="exp-points">
+              <li>Develop and maintain custom applications on the ServiceNow platform to meet business requirements.</li>
+              <li>Implement automated workflows and business process improvements using ServiceNow's development tools.</li>
+              <li>Collaborate with senior developers and architects on complex system integrations.</li>
+              <li>Contribute to feature enhancements and maintain code quality through testing and documentation.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-card reveal">
+          <div class="exp-dot-wrap">
+            <div class="exp-dot"></div>
+            <div class="exp-dot-line"></div>
+          </div>
+          <div>
+            <div class="exp-date">Sep 2024 — Dec 2024</div>
+            <div class="exp-role">ServiceNow Administration & Development Intern</div>
+            <div class="exp-company">I-Connect Resources International Pvt. Ltd.</div>
+            <ul class="exp-points">
+              <li>Mastered ServiceNow platform administration, workflow automation, and custom application development.</li>
+              <li>Gained hands-on experience with ITSM modules and Event Management best practices.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-card reveal">
+          <div class="exp-dot-wrap">
+            <div class="exp-dot"></div>
+          </div>
+          <div>
+            <div class="exp-date">Feb 2024 — Aug 2024</div>
+            <div class="exp-role">Full Stack Development Intern</div>
+            <div class="exp-company">I-Connect Resources International Pvt. Ltd.</div>
+            <ul class="exp-points">
+              <li>Built responsive web applications using React, Node.js, and modern database management systems.</li>
+              <li>Participated in code reviews, followed agile development methodologies, and collaborated cross-functionally.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education inline -->
+      <div style="margin-top:4rem;">
+        <div class="section-label">Academic Background</div>
+        <h2 class="section-title" style="font-size:2rem;">Education</h2>
+        <div class="edu-grid" style="margin-top:2rem;">
+          <div class="edu-card reveal">
+            <div class="edu-year">2018 — 2022</div>
+            <div class="edu-degree">Bachelor of Engineering</div>
+            <div class="edu-school">Christian College of Engineering and Technology</div>
+            <span class="edu-grade">⭐ First Class Distinction</span>
+          </div>
+          <div class="edu-card reveal">
+            <div class="edu-year">2017 — 2018</div>
+            <div class="edu-degree">Higher Secondary School</div>
+            <div class="edu-school">Bhilai Nair Samajam School</div>
+            <span class="edu-grade">⭐ First Class Distinction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-label">Featured Work</div>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-desc">A selection of projects spanning ServiceNow, full-stack development, and machine learning.</p>
+      <div class="projects-grid">
+        <div class="proj-card reveal">
+          <div class="proj-img proj-img-1">
+            <span class="proj-icon">🎓</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">ServiceNow</span>
+              <span class="proj-tag">App Engine</span>
+              <span class="proj-tag">ITSM</span>
+            </div>
+            <div class="proj-title">Corporate LMS</div>
+            <div class="proj-desc">A ServiceNow application built with App Engine Studio enabling employees to learn skills aligned with company needs. Managers can track progress and skill development via dashboards.</div>
+            <div class="proj-footer">
+              <a href="https://github.com/naman252001?tab=repositories" class="proj-link" target="_blank">VIEW PROJECT →</a>
+            </div>
+          </div>
+        </div>
+        <div class="proj-card reveal">
+          <div class="proj-img proj-img-2">
+            <span class="proj-icon">🗂️</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">MERN Stack</span>
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">Node.js</span>
+            </div>
+            <div class="proj-title">Corporate Workhub</div>
+            <div class="proj-desc">A MERN stack application for employees to display daily tasks and view 3-month work history. Managers get individual employee reports and comprehensive work history for performance tracking.</div>
+            <div class="proj-footer">
+              <a href="https://github.com/naman252001?tab=repositories" class="proj-link" target="_blank">VIEW PROJECT →</a>
+            </div>
+          </div>
+        </div>
+        <div class="proj-card reveal">
+          <div class="proj-img proj-img-3">
+            <span class="proj-icon">🚗</span>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">ML</span>
+              <span class="proj-tag">Power BI</span>
+            </div>
+            <div class="proj-title">Car Price Prediction</div>
+            <div class="proj-desc">ML project for Geely Auto entering the US market. Used numpy, pandas, and ML algorithms to predict car prices, with a Power BI dashboard surfacing insights on price variations.</div>
+            <div class="proj-footer">
+              <a href="https://github.com/naman252001?tab=repositories" class="proj-link" target="_blank">VIEW PROJECT →</a>
             </div>
           </div>
         </div>
       </div>
-	
-	  <div class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/bg_1.jpg)">
-			<!-- <div class="container"> -->
-				<div class="row justify-content-center">
-					<div class="col-md-7 ftco-animate text-center">
-						<h2>More projects on<span> Github  </span> </h2>
-						<div class="heading"> <h4> I love to solve business problems &amp; uncover hidden data stories </h4>
-						<br>
-						<p><a href="https://github.com/naman252001?tab=repositories" class="btn btn-primary py-3 px-5">GitHub</a></p>
-						</div>
-					</div>
-				</div>
-			<!-- </div> -->
-		</div>
-	</section>
+      <div style="text-align:center;margin-top:2.5rem;">
+        <a href="https://github.com/naman252001?tab=repositories" target="_blank" class="btn-outline-hero">See All on GitHub →</a>
+      </div>
+    </div>
+  </section>
 
-
-
-    <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
-      <div class="container">
-      	<div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <h1 class="big big-2">Contact</h1>
-            <h2 class="mb-4">Contact Me</h2>
-            <p>Below are the details to reach out to me!</p>
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Contact Me</h2>
+      <div class="contact-grid">
+        <div>
+          <div class="contact-cta">
+            <p>I'm currently open to new opportunities in ServiceNow development, full-stack engineering, and data analytics roles. Whether you have a question or just want to say hi — my inbox is always open!</p>
+            <a href="mailto:pandeynaman661@gmail.com" class="btn-primary-hero" style="display:inline-block;">Say Hello 👋</a>
+          </div>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/naman-pandey-b3ab2b249/" class="social-btn" target="_blank" title="LinkedIn">in</a>
+            <a href="https://github.com/naman252001" class="social-btn" target="_blank" title="GitHub">gh</a>
+            <a href="https://x.com/Naman_2506" class="social-btn" target="_blank" title="Twitter">𝕏</a>
+            <a href="https://www.instagram.com/_naman2506_/" class="social-btn" target="_blank" title="Instagram">ig</a>
           </div>
         </div>
+        <div class="contact-cards">
+          <a href="tel:+919340050737" class="contact-card">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-card-label">Phone</div>
+              <div class="contact-card-value">+91 93400 50737</div>
+            </div>
+          </a>
+          <a href="mailto:pandeynaman661@gmail.com" class="contact-card">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-card-label">Email</div>
+              <div class="contact-card-value">pandeynaman661@gmail.com</div>
+            </div>
+          </a>
+          <a href="#" class="contact-card">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-card-label">Location</div>
+              <div class="contact-card-value">Bhilai, Chhattisgarh, India</div>
+            </div>
+          </a>
+          <a href="https://drive.google.com/file/d/1T3FvbcOMkJzZ21dm_zRSyd91Q1DjC_kw/view?usp=drive_link" class="contact-card" target="_blank">
+            <div class="contact-icon">📄</div>
+            <div>
+              <div class="contact-card-label">Resume</div>
+              <div class="contact-card-value">Download CV →</div>
+            </div>
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScb4Jxyscj6B0g0gyF2umZl6-q-eqR0rHeOvysAe7vyLK8Npg/viewform" class="contact-card" target="_blank">
+            <div class="contact-icon">❓</div>
+            <div>
+              <div class="contact-card-label">Got a question?</div>
+              <div class="contact-card-value">Fill out the form →</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="row d-flex contact-info mb-5">
-          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-map-signs"></span>
-          		</div>
-          		<h3 class="mb-4">Address</h3>
-	            <p>Bhilai,Chhattisgarh, India</p>
-	          </div>
-          </div>
-          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-phone2"></span>
-          		</div>
-          		<h3 class="mb-4">Contact Number</h3>
-	            <p><a href="tel://0101010101">+91 9340050737</a></p>
-	          </div>
-          </div>
-          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-paper-plane"></span>
-          		</div>
-          		<h3 class="mb-4">Email Address</h3>
-	            <p><a href="mailto:info@yoursite.com">pandeynaman661@gmail.com.com</a></p>
-	          </div>
-          </div>
-          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-globe"></span>
-          		</div>
-          		<h3 class="mb-4">Download Resume</h3>
-	            <p><a href="https://drive.google.com/file/d/1T3FvbcOMkJzZ21dm_zRSyd91Q1DjC_kw/view?usp=drive_link">Click Here</a></p>
-	          </div>
-          </div>
+  <footer>
+    <p>Designed & built by <strong style="color:var(--accent)">Naman Pandey</strong> · 2025</p>
+  </footer>
 
-		  <div class="container">
-			<br>
-			<br>
-			<div class="row justify-content-center">
-				<div class="col-md-7 ftco-animate text-center">
-					<h2>Have a<span> Question?  </span> <a href="https://docs.google.com/forms/d/e/1FAIpQLScb4Jxyscj6B0g0gyF2umZl6-q-eqR0rHeOvysAe7vyLK8Npg/viewform?usp=sf_link" class="btn btn-primary py-3 px-5">Click Here</a> </h2>
-				</div>
-			</div>
-				<br>
-					<ul class="ftco-footer-social list-unstyled d-flex justify-content-center align-items-center mb-0">
-					  <li class="ftco-animate normal-txt">Find me on  </li>
-					  <li class="ftco-animate"><a href="https://www.linkedin.com/in/naman-pandey-b3ab2b249/"><span class="icon-linkedin"></span></a></li>  
-					  <li class="ftco-animate"><a href="https://x.com/Naman_2506"><span class="icon-twitter"></span></a></li>
-					  <li class="ftco-animate"><a href="https://x.com/Naman_2506"><span class="icon-facebook"></span></a></li>
-				      <li class="ftco-animate"><a href="https://www.instagram.com/_naman2506_/"><span class="icon-instagram"></span></a></li>
-					</ul>
-				<br>
-		   </div>
-   </div>
- </section>
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+      requestAnimationFrame(animCursor);
+    }
+    animCursor();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+    });
 
+    // Typing animation
+    const roles = ['ServiceNow Developer', 'Full Stack Engineer', 'Data Analyst', 'Sports Enthusiast'];
+    let ri = 0, ci = 0, deleting = false;
+    const el = document.getElementById('typingEl');
+    function type() {
+      const word = roles[ri];
+      if (!deleting) {
+        el.textContent = word.slice(0, ++ci);
+        if (ci === word.length) { deleting = true; setTimeout(type, 1600); return; }
+      } else {
+        el.textContent = word.slice(0, --ci);
+        if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; setTimeout(type, 300); return; }
+      }
+      setTimeout(type, deleting ? 60 : 110);
+    }
+    type();
 
- 
-	
-    <footer class="ftco-footer ftco-section">
-		<div class="container">
-		  <div class="row">
-			<div class="col-md-12 text-center">
-  
-			  <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-	Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-	<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-			</div>
-		  </div>
-		</div>
-	  </footer>
+    // Skill bars
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.skill-fill').forEach(b => {
+            b.style.width = b.dataset.pct + '%';
+          });
+          e.target.querySelectorAll('.stat-num[data-target]').forEach(n => {
+            const target = +n.dataset.target;
+            let cur = 0;
+            const step = target / 40;
+            const t = setInterval(() => {
+              cur = Math.min(cur + step, target);
+              n.textContent = Math.floor(cur) + (target >= 100 ? '' : '+');
+              if (cur >= target) clearInterval(t);
+            }, 40);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(document.querySelector('#about'));
+    observer.observe(document.querySelector('#stats'));
 
-
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  
-  <script src="js/main.js"></script>
-    
-  </body>
+    // Reveal on scroll
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+  </script>
+</body>
 </html>
