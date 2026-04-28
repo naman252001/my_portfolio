@@ -1235,5 +1235,338 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
   </script>
+
+  <!-- ====================== NAMAN AI ASSISTANT (TOGGLE OPEN/CLOSE) ====================== -->
+<style>
+ 
+/* NORMAL CURSOR INSIDE CHAT */
+#namanAiWrap,
+#namanAiWrap *,
+#namanAiWrap input,
+#namanAiWrap button,
+#namanAiWrap a{
+cursor:auto !important;
+}
+ 
+#namanAiWrap button,
+#namanAiWrap a,
+#closeAi,
+#namanAiBtn{
+cursor:pointer !important;
+}
+ 
+#inputAi{
+cursor:text !important;
+}
+ 
+/* FLOATING BUTTON */
+#namanAiBtn{
+position:fixed;
+right:25px;
+bottom:25px;
+width:72px;
+height:72px;
+border:none;
+border-radius:50%;
+background:linear-gradient(135deg,#e8c84a,#f7e07c);
+color:#111;
+font-size:30px;
+font-weight:900;
+z-index:99999;
+box-shadow:0 0 25px rgba(232,200,74,.45);
+animation:floatAi 3s ease-in-out infinite,pulseAi 2s infinite;
+transition:.3s;
+}
+ 
+#namanAiBtn:hover{
+transform:scale(1.08);
+}
+ 
+@keyframes floatAi{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+}
+ 
+@keyframes pulseAi{
+0%{box-shadow:0 0 0 rgba(232,200,74,.2);}
+50%{box-shadow:0 0 35px rgba(232,200,74,.75);}
+100%{box-shadow:0 0 0 rgba(232,200,74,.2);}
+}
+ 
+/* CHAT BOX */
+#namanAiWrap{
+position:fixed;
+right:25px;
+bottom:110px;
+width:395px;
+max-width:95%;
+height:640px;
+background:#111118;
+border-radius:18px;
+overflow:hidden;
+display:none;
+flex-direction:column;
+z-index:99999;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 20px 60px rgba(0,0,0,.55);
+}
+ 
+.head{
+background:#e8c84a;
+padding:15px;
+font-weight:700;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:#111;
+font-size:16px;
+}
+ 
+.head small{
+display:block;
+font-size:11px;
+opacity:.8;
+margin-top:2px;
+}
+ 
+#closeAi{
+font-size:24px;
+}
+ 
+#chatBody{
+flex:1;
+overflow-y:auto;
+padding:14px;
+background:#111118;
+}
+ 
+.msg{
+padding:12px;
+margin-bottom:12px;
+border-radius:14px;
+font-size:14px;
+line-height:1.65;
+max-width:86%;
+}
+ 
+.bot{
+background:#1b1b25;
+color:#fff;
+}
+ 
+.user{
+background:#e8c84a;
+color:#111;
+margin-left:auto;
+font-weight:600;
+}
+ 
+.quick{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-bottom:12px;
+}
+ 
+.quick button{
+padding:8px 12px;
+border:none;
+border-radius:30px;
+background:#1b1b25;
+color:#fff;
+font-size:12px;
+border:1px solid rgba(255,255,255,.08);
+}
+ 
+.quick button:hover{
+border-color:#e8c84a;
+color:#e8c84a;
+}
+ 
+.inputWrap{
+display:flex;
+border-top:1px solid rgba(255,255,255,.08);
+}
+ 
+#inputAi{
+flex:1;
+padding:14px;
+border:none;
+outline:none;
+background:#0a0a0f;
+color:#fff;
+font-size:14px;
+}
+ 
+#sendAi{
+width:75px;
+border:none;
+background:#e8c84a;
+font-weight:700;
+color:#111;
+}
+ 
+a{
+color:#e8c84a;
+text-decoration:none;
+font-weight:600;
+}
+ 
+@media(max-width:600px){
+#namanAiWrap{
+width:95%;
+right:2.5%;
+height:80vh;
+bottom:100px;
+}
+#namanAiBtn{
+right:18px;
+bottom:18px;
+}
+}
+</style>
+ 
+<!-- BUTTON -->
+<button id="namanAiBtn">✦</button>
+ 
+<!-- CHAT -->
+<div id="namanAiWrap">
+ 
+<div class="head">
+<div>
+Naman AI Assistant
+<small>Ask anything about Naman Pandey</small>
+</div>
+<span id="closeAi">×</span>
+</div>
+ 
+<div id="chatBody">
+ 
+<div class="msg bot">
+Hello 👋 Welcome to Naman's Portfolio.<br>
+I'm Naman AI Assistant.<br>
+Ask me about resume, certificates, projects, experience or contact details.
+</div>
+ 
+<div class="quick">
+<button onclick="ask('Hi')">Hi</button>
+<button onclick="ask('Resume')">Resume</button>
+<button onclick="ask('Certificates')">Certificates</button>
+<button onclick="ask('Experience')">Experience</button>
+<button onclick="ask('Projects')">Projects</button>
+<button onclick="ask('Contact')">Contact</button>
+</div>
+ 
+</div>
+ 
+<div class="inputWrap">
+<input id="inputAi" placeholder="Ask something...">
+<button id="sendAi">Send</button>
+</div>
+ 
+</div>
+ 
+<script>
+const btn=document.getElementById("namanAiBtn");
+const wrap=document.getElementById("namanAiWrap");
+const close=document.getElementById("closeAi");
+const body=document.getElementById("chatBody");
+const input=document.getElementById("inputAi");
+const send=document.getElementById("sendAi");
+ 
+/* TOGGLE OPEN / CLOSE */
+btn.onclick=()=>{
+if(wrap.style.display==="flex"){
+wrap.style.display="none";
+}else{
+wrap.style.display="flex";
+input.focus();
+}
+};
+ 
+/* CLOSE X */
+close.onclick=()=>{
+wrap.style.display="none";
+};
+ 
+function msg(text,type){
+let d=document.createElement("div");
+d.className="msg "+type;
+d.innerHTML=text;
+body.appendChild(d);
+body.scrollTop=body.scrollHeight;
+}
+ 
+function ask(q){
+input.value=q;
+replyNow();
+}
+ 
+function bot(q){
+q=q.toLowerCase().trim();
+ 
+if(q==="hi" || q==="hello" || q==="hey"){
+return "Hello 👋 Welcome to Naman's Portfolio.<br>I'm Naman AI Assistant.";
+}
+ 
+if(q.includes("resume")){
+return `📄 Resume:<br>
+<a href="https://docs.google.com/document/d/1hdJme07UoaD42ynuAuIT2SnF2-xNgVK0/edit?usp=sharing&ouid=111886769269373525714&rtpof=true&sd=true%22 target="_blank">Open Resume</a>`;
+}
+ 
+if(q.includes("certificate")){
+return `🏆 Certifications:<br>
+1. CSA<br>
+2. CAD<br>
+3. CIS-ITSM<br>
+4. CIS-Event Management`;
+}
+ 
+if(q.includes("experience")){
+return "💼 Naman has 2+ years of professional experience and currently works at I-Connect Resources International Pvt. Ltd.";
+}
+ 
+if(q.includes("project")){
+return "Projects:<br>1️⃣ Corporate LMS<br>2️⃣ Corporate WorkHub<br>3️⃣ Car Price Prediction";
+}
+ 
+if(q.includes("skill")){
+return "Top Skills:<br>✅ ServiceNow<br>✅ Data Analytics<br>✅ Power BI<br>✅ SQL<br>✅ ReactJS";
+}
+ 
+if(q.includes("contact") || q.includes("email") || q.includes("phone")){
+return `📧 <a href="mailto:pandeynaman661@gmail.com">pandeynaman661@gmail.com</a><br>
+📞 <a href="tel:+919340050737">+91 9340050737</a><br>
+💼 <a href="https://www.linkedin.com/in/naman-pandey-b3ab2b249/" target="_blank">LinkedIn</a><br>
+💻 <a href="https://github.com/naman252001" target="_blank">GitHub</a>`;
+}
+ 
+return `I don't know that right now.<br>
+Please contact Naman directly:<br>
+<a href="mailto:pandeynaman661@gmail.com">pandeynaman661@gmail.com</a>`;
+}
+ 
+function replyNow(){
+let q=input.value.trim();
+if(q==="") return;
+ 
+msg(q,"user");
+input.value="";
+ 
+setTimeout(()=>{
+msg(bot(q),"bot");
+},500);
+}
+ 
+send.onclick=replyNow;
+ 
+input.addEventListener("keypress",function(e){
+if(e.key==="Enter"){
+replyNow();
+}
+});
+</script>
+ 
+<!-- ====================== END ====================== -->
 </body>
 </html>
